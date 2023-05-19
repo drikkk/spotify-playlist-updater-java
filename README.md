@@ -1,7 +1,7 @@
 # spotify-playlist-updater
 
-I created this project to fight the Spotify playlist reporting bots.
-Salty bots spam reports on growing playlists which trigger the Spotifys playlist nulling automation and the playlist is wiped from its title, description and image.
+I created this project to fight the Spotify playlist reporting bots (Takedown Notification).
+Salty creators use bots to spam reports on growing playlists which triggers the Takedown Notification and your playlist is wiped from its title, description and image.
 
 With this program you can restore your playlists easily and stick it to the bots!
 
