@@ -7,7 +7,9 @@ import fix.my.playlist.util.Base64Converter;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.List;
 
 import static io.restassured.config.EncoderConfig.encoderConfig;
@@ -17,7 +19,7 @@ import static io.restassured.http.ContentType.JSON;
 public class PlaylistUpdater {
     private static final String HEADER_AUTH_FIELD = "Authorization";
     private static String HEADER_AUTH_VALUE;
-    private static final Logger log = Logger.getLogger(PlaylistUpdater.class);
+    private static final Logger log = LogManager.getLogger(PlaylistUpdater.class);
 
     public static void fixMyPlaylists(List<Playlist> playlists) {
         HEADER_AUTH_VALUE = "Bearer " + BearerTokenRetriever.getFreshToken();
