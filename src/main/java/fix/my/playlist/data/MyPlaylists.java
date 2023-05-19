@@ -12,4 +12,10 @@ public class MyPlaylists {
         "JUNGLE IS MASSIVE!!!! Not on Spotify: Mask & Gang Related - Dictation ( Michael Caine remix ) jungle dnb",
         Objects.requireNonNull(PlaylistUpdater.class.getClassLoader().getResource("jungle_dnb_image.jpg")).getPath(),
         "4EAgTGzJpLvtDxQhqNgd0z");
+
+    public static final Playlist CHILL_HIP_HOP = new Playlist(
+        "Chill Hip Hop Rap \uD83D\uDE0E",
+        "Chill beast & dope flow featuring A$AP Rocky, Kendrick Lamar, Kanye West, MF DOOM and many more...",
+        null,
+        "6IOBfN7LWZJ8IGfX7i07R1");
 }
