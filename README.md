@@ -15,3 +15,4 @@ With this program you can restore your playlists easily and stick it to the bots
 - Add your Spotify credentials to config.properties
 - Define your playlist in MyPlaylists.class 
 - Run the PlaylistUpdater.fixMyPlaylists() method against your defined playlists.
+- Run it through IDE or with Maven: `mvn -f C:\path\to\project\root\pom.xml exec:java -Dexec.mainClass="fix.my.playlist.Main"`
