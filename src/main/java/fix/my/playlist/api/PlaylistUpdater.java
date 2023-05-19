@@ -7,20 +7,25 @@ import fix.my.playlist.util.Base64Converter;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.apache.log4j.Logger;
+import java.util.List;
 
 import static io.restassured.config.EncoderConfig.encoderConfig;
 import static io.restassured.http.ContentType.JSON;
 
-public class PlaylistUpdater {
 
+public class PlaylistUpdater {
     private static final String HEADER_AUTH_FIELD = "Authorization";
     private static String HEADER_AUTH_VALUE;
+    private static final Logger log = Logger.getLogger(PlaylistUpdater.class);
 
-    public static void fixMyPlaylist(Playlist playlist) {
+    public static void fixMyPlaylists(List<Playlist> playlists) {
         HEADER_AUTH_VALUE = "Bearer " + BearerTokenRetriever.getFreshToken();
 
-        updateTitleAndDescription(playlist);
-        updateImage(playlist);
+        for (var playlist : playlists) {
+            updateTitleAndDescription(playlist);
+            updateImage(playlist);
+        }
     }
 
     private static void updateTitleAndDescription(Playlist playlist) {
@@ -37,14 +42,16 @@ public class PlaylistUpdater {
 
         int statusCode = response.getStatusCode();
         if (statusCode == 200) {
-            System.out.println("Playlist Title & Description updated successfully");
+            log.info(String.format("%s: Title & Description updated!", playlist.getTitle()));
         } else {
-            System.out.println("Failed to update playlist description. Status code: " + statusCode);
+            log.info(String.format("%s: Failed to update playlist title & description. Status code: %s", playlist.getTitle(), statusCode));
             response.getBody().prettyPrint();
         }
     }
 
     private static void updateImage(Playlist playlist) {
+        if (playlist.getImage() == null) return;
+
         Response response = RestAssured.given()
             .config(RestAssured.config().encoderConfig(encoderConfig().encodeContentTypeAs("image/jpeg", ContentType.TEXT)))
             .baseUri(SpotifyEndpoints.PLAYLISTS.getValue())
@@ -55,9 +62,9 @@ public class PlaylistUpdater {
 
         int statusCode = response.getStatusCode();
         if (statusCode == 202) {
-            System.out.println("Playlist Image updated successfully");
+            log.info(String.format("%s: Image updated!", playlist.getTitle()));
         } else {
-            System.out.println("Failed to update playlist image. Status code: " + statusCode);
+            log.info(String.format("%s: Failed to update playlist image. Status code: %s", playlist.getTitle(), statusCode));
             response.getBody().prettyPrint();
         }
     }
