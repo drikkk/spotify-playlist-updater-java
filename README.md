@@ -14,10 +14,14 @@ With this program you can restore your playlists easily and stick it to the bots
 - Rename config.example.properties to config.properties
 - Add your Spotify API credentials to config.properties
 - Define your playlists in MyPlaylists.class 
-- Execute main class through IDE or with Maven: `mvn -f C:\path\to\project\root\pom.xml exec:java -Dexec.mainClass="fix.my.playlist.Main"`
+- Execute main class through IDE or with Maven: 
+- ```mvn -f C:\path\to\project\root\pom.xml exec:java -Dexec.mainClass="fix.my.playlist.Main"```
 
 ## Running the script in the background on your Windows machine
-- Create a .bat file: `CALL mvn -f C:\path\to\project\root\pom.xml exec:java -Dexec.mainClass="fix.my.playlist.Main"`
+- Create a .bat file: 
+```
+CALL mvn -f C:\path\to\project\root\pom.xml exec:java -Dexec.mainClass="fix.my.playlist.Main"
+```
 - Create a .svb file: 
 ```
 Dim WinScriptHost
@@ -25,6 +29,9 @@ Set WinScriptHost = CreateObject("WScript.Shell")
 WinScriptHost.Run Chr(34) & "C:\path\to\your\bat\file.bat" & Chr(34), 0
 Set WinScriptHost = Nothing
 ```
-- Open Windows Task Scheduler and create a task that executes `C:\Windows\System32\wscript.exe "C:\path\to\your\svb\file.svb"`
+- Open Windows Task Scheduler and create a task that executes (It might require Administrators group permission)
+```
+C:\Windows\System32\wscript.exe "C:\path\to\your\svb\file.svb"
+```
 
-Now your script will run at your defined schedule in the background without opening a command prompt. Enjoy!
+Now your Spotify playlist is protected from spam bots and will be updated constantly. Enjoy!
