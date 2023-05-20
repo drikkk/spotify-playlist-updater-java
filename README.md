@@ -34,4 +34,4 @@ Set WinScriptHost = Nothing
 C:\Windows\System32\wscript.exe "C:\path\to\your\svb\file.svb"
 ```
 
-Now your Spotify playlist is protected from spam bots and will be updated constantly. Enjoy!
+Now your Spotify playlist is protected from spam bots and will be updated as per your scheduler configuration. Enjoy!
