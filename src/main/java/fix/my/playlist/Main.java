@@ -16,7 +16,7 @@ public class Main {
         PlaylistUpdater.fixMyPlaylists(listOfPlaylists);
     }
 
-    public static List<Playlist> getPlaylists() {
+    private static List<Playlist> getPlaylists() {
         List<Playlist> playlistList = new ArrayList<>();
         Class<?> containingClass = MyPlaylists.class;
 
