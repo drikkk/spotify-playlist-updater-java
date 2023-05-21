@@ -9,7 +9,7 @@ import java.io.File;
 public class Playlist {
 
     @Getter
-    private final String title;
+    private final String name;
     @Getter
     private final String description;
     @Getter

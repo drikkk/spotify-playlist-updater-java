@@ -1,6 +1,6 @@
 package fix.my.playlist;
 
-import fix.my.playlist.api.PlaylistUpdater;
+import fix.my.playlist.api.ApiAdapter;
 import fix.my.playlist.data.MyPlaylists;
 import fix.my.playlist.model.Playlist;
 
@@ -11,7 +11,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        PlaylistUpdater.updatePlaylists(getPlaylists());
+        ApiAdapter.updatePlaylists(getPlaylists());
     }
 
     private static List<Playlist> getPlaylists() {
