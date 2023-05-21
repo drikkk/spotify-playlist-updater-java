@@ -11,9 +11,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        var listOfPlaylists = getPlaylists();
-
-        PlaylistUpdater.fixMyPlaylists(listOfPlaylists);
+        PlaylistUpdater.updatePlaylists(getPlaylists());
     }
 
     private static List<Playlist> getPlaylists() {
@@ -32,7 +30,6 @@ public class Main {
                 }
             }
         }
-
         return playlistList;
     }
 }
