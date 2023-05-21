@@ -46,7 +46,7 @@ public class PlaylistUpdater {
         if (statusCode == 200) {
             log.info(String.format("%s: Title & Description updated!", playlist.getTitle()));
         } else {
-            log.info(String.format("%s: Failed to update playlist title & description. Status code: %s", playlist.getTitle(), statusCode));
+            log.error(String.format("%s: Failed to update playlist title & description. Status code: %s", playlist.getTitle(), statusCode));
             response.getBody().prettyPrint();
         }
     }
@@ -66,7 +66,7 @@ public class PlaylistUpdater {
         if (statusCode == 202) {
             log.info(String.format("%s: Image updated!", playlist.getTitle()));
         } else {
-            log.info(String.format("%s: Failed to update playlist image. Status code: %s", playlist.getTitle(), statusCode));
+            log.error(String.format("%s: Failed to update playlist image. Status code: %s", playlist.getTitle(), statusCode));
             response.getBody().prettyPrint();
         }
     }
