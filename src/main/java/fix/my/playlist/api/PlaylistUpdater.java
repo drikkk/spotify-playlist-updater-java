@@ -21,7 +21,7 @@ public class PlaylistUpdater {
     private static String BEARER_STRING;
     private static final Logger log = LogManager.getLogger(PlaylistUpdater.class);
 
-    public static void fixMyPlaylists(List<Playlist> playlists) {
+    public static void updatePlaylists(List<Playlist> playlists) {
         BEARER_STRING = "Bearer " + BearerTokenRetriever.getFreshToken();
 
         for (var playlist : playlists) {
