@@ -6,11 +6,10 @@ import java.util.Base64;
 
 public class Base64Converter {
 
-    public static String getBase64Image(String imagePath) {
+    public static String getBase64Image(File image) {
         try {
-            File file = new File(imagePath);
-            byte[] fileContent = Files.readAllBytes(file.toPath());
-            return Base64.getEncoder().encodeToString(fileContent);
+            var imageByteArray = Files.readAllBytes(image.toPath());
+            return Base64.getEncoder().encodeToString(imageByteArray);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

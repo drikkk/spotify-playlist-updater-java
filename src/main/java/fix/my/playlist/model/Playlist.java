@@ -3,6 +3,8 @@ package fix.my.playlist.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.io.File;
+
 @AllArgsConstructor
 public class Playlist {
 
@@ -11,7 +13,7 @@ public class Playlist {
     @Getter
     private final String description;
     @Getter
-    private final String image;
+    private final File image;
     @Getter
     private final String spotifyPlaylistId;
 }
