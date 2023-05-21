@@ -18,46 +18,64 @@ import static io.restassured.http.ContentType.JSON;
 
 public class PlaylistUpdater {
     private static final String HEADER_AUTH_FIELD = "Authorization";
-    private static String HEADER_AUTH_VALUE;
+    private static String BEARER_STRING;
     private static final Logger log = LogManager.getLogger(PlaylistUpdater.class);
 
     public static void fixMyPlaylists(List<Playlist> playlists) {
-        HEADER_AUTH_VALUE = "Bearer " + BearerTokenRetriever.getFreshToken();
+        BEARER_STRING = "Bearer " + BearerTokenRetriever.getFreshToken();
 
         for (var playlist : playlists) {
-            updateTitleAndDescription(playlist);
-            updateImage(playlist);
+            if (playlist.getTitle() != null) updateTitle(playlist);
+            if (playlist.getDescription() != null) updateDescription(playlist);
+            if (playlist.getImage() != null) updateImage(playlist);
         }
     }
 
-    private static void updateTitleAndDescription(Playlist playlist) {
+    private static void updateTitle(Playlist playlist) {
         var jsonObject = new ObjectMapper().createObjectNode();
-        jsonObject.put("name", playlist.getTitle());
         jsonObject.put("description", playlist.getDescription());
 
         Response response = RestAssured.given()
             .baseUri(SpotifyEndpoints.PLAYLISTS.getValue())
-            .header(HEADER_AUTH_FIELD, HEADER_AUTH_VALUE)
+            .header(HEADER_AUTH_FIELD, BEARER_STRING)
             .contentType(JSON)
             .body(jsonObject)
             .put(playlist.getSpotifyPlaylistId());
 
         int statusCode = response.getStatusCode();
         if (statusCode == 200) {
-            log.info(String.format("%s: Title & Description updated!", playlist.getTitle()));
+            log.info(String.format("%s: Name updated!", playlist.getTitle()));
         } else {
-            log.error(String.format("%s: Failed to update playlist title & description. Status code: %s", playlist.getTitle(), statusCode));
+            log.error(String.format("%s: Failed to update playlist name. Status code: %s", playlist.getTitle(), statusCode));
+            response.getBody().prettyPrint();
+        }
+    }
+
+    private static void updateDescription(Playlist playlist) {
+        var jsonObject = new ObjectMapper().createObjectNode();
+        jsonObject.put("description", playlist.getDescription());
+
+        Response response = RestAssured.given()
+            .baseUri(SpotifyEndpoints.PLAYLISTS.getValue())
+            .header(HEADER_AUTH_FIELD, BEARER_STRING)
+            .contentType(JSON)
+            .body(jsonObject)
+            .put(playlist.getSpotifyPlaylistId());
+
+        int statusCode = response.getStatusCode();
+        if (statusCode == 200) {
+            log.info(String.format("%s: Description updated!", playlist.getTitle()));
+        } else {
+            log.error(String.format("%s: Failed to update playlist description. Status code: %s", playlist.getTitle(), statusCode));
             response.getBody().prettyPrint();
         }
     }
 
     private static void updateImage(Playlist playlist) {
-        if (playlist.getImage() == null) return;
-
         Response response = RestAssured.given()
             .config(RestAssured.config().encoderConfig(encoderConfig().encodeContentTypeAs("image/jpeg", ContentType.TEXT)))
             .baseUri(SpotifyEndpoints.PLAYLISTS.getValue())
-            .header(HEADER_AUTH_FIELD, HEADER_AUTH_VALUE)
+            .header(HEADER_AUTH_FIELD, BEARER_STRING)
             .contentType("image/jpeg")
             .body(Base64Converter.getBase64Image(playlist.getImage()))
             .put(playlist.getSpotifyPlaylistId() + "/images");
