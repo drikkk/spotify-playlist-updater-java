@@ -18,11 +18,11 @@ import static io.restassured.http.ContentType.JSON;
 
 public class ApiAdapter {
 
-    private static final String CONTENT_TYPE_URL_ENCODED = "application/x-www-form-urlencoded";
-    private static final String GRANT_TYPE_FIELD = "grant_type";
+    private static final String GRANT_TYPE_STRING = "grant_type";
+    private static final String AUTHORIZATION_STRING = "Authorization";
+    private static final String URL_ENCODED_STRING = "application/x-www-form-urlencoded";
     private static final String REFRESH_TOKEN_STRING = "refresh_token";
     private static final String ACCESS_TOKEN_STRING = "access_token";
-    private static final String HEADER_AUTH_FIELD = "Authorization";
     private static final String BEARER_STRING;
     private static final Logger log = LogManager.getLogger(ApiAdapter.class);
 
@@ -44,16 +44,16 @@ public class ApiAdapter {
 
         Response response = RestAssured.given()
             .baseUri(SpotifyEndpoints.PLAYLISTS.getValue())
-            .header(HEADER_AUTH_FIELD, BEARER_STRING)
+            .header(AUTHORIZATION_STRING, BEARER_STRING)
             .contentType(JSON)
             .body(jsonObject)
             .put(playlist.getSpotifyPlaylistId());
 
         int statusCode = response.getStatusCode();
         if (statusCode == 200) {
-            log.info(String.format("%s: Name updated!", playlist.getName()));
+            log.info("{}: Name updated!", playlist.getName());
         } else {
-            log.error(String.format("%s: Failed to update playlist name. Status code: %s", playlist.getName(), statusCode));
+            log.error("{}: Failed to update playlist name. Status code: {}", playlist.getName(), statusCode);
             response.getBody().prettyPrint();
         }
     }
@@ -64,16 +64,16 @@ public class ApiAdapter {
 
         Response response = RestAssured.given()
             .baseUri(SpotifyEndpoints.PLAYLISTS.getValue())
-            .header(HEADER_AUTH_FIELD, BEARER_STRING)
+            .header(AUTHORIZATION_STRING, BEARER_STRING)
             .contentType(JSON)
             .body(jsonObject)
             .put(playlist.getSpotifyPlaylistId());
 
         int statusCode = response.getStatusCode();
         if (statusCode == 200) {
-            log.info(String.format("%s: Description updated!", playlist.getName()));
+            log.info("{}: Description updated!", playlist.getName());
         } else {
-            log.error(String.format("%s: Failed to update playlist description. Status code: %s", playlist.getName(), statusCode));
+            log.error("{}: Failed to update playlist description. Status code: {}", playlist.getName(), statusCode);
             response.getBody().prettyPrint();
         }
     }
@@ -82,25 +82,25 @@ public class ApiAdapter {
         Response response = RestAssured.given()
             .config(RestAssured.config().encoderConfig(encoderConfig().encodeContentTypeAs("image/jpeg", ContentType.TEXT)))
             .baseUri(SpotifyEndpoints.PLAYLISTS.getValue())
-            .header(HEADER_AUTH_FIELD, BEARER_STRING)
+            .header(AUTHORIZATION_STRING, BEARER_STRING)
             .contentType("image/jpeg")
             .body(Base64Converter.getBase64Image(playlist.getImage()))
             .put(playlist.getSpotifyPlaylistId() + "/images");
 
         int statusCode = response.getStatusCode();
         if (statusCode == 202) {
-            log.info(String.format("%s: Image updated!", playlist.getName()));
+            log.info("{}: Image updated!", playlist.getName());
         } else {
-            log.error(String.format("%s: Failed to update playlist image. Status code: %s", playlist.getName(), statusCode));
+            log.error("{}: Failed to update playlist image. Status code: {}", playlist.getName(), statusCode);
             response.getBody().prettyPrint();
         }
     }
 
-    public static String getRefreshedBearerToken() {
+    private static String getRefreshedBearerToken() {
         Response response = RestAssured.given()
             .baseUri(SpotifyEndpoints.TOKEN.getValue())
-            .contentType(CONTENT_TYPE_URL_ENCODED)
-            .formParam(GRANT_TYPE_FIELD, REFRESH_TOKEN_STRING)
+            .contentType(URL_ENCODED_STRING)
+            .formParam(GRANT_TYPE_STRING, REFRESH_TOKEN_STRING)
             .formParam(REFRESH_TOKEN_STRING, Config.getRefresherToken())
             .auth()
             .preemptive()
@@ -110,11 +110,11 @@ public class ApiAdapter {
         return response.jsonPath().getString(ACCESS_TOKEN_STRING);
     }
 
-    public static String getNewBearerToken() {
+    private static String getNewBearerToken() {
         Response response = RestAssured.given()
             .baseUri(SpotifyEndpoints.TOKEN.getValue())
-            .contentType(CONTENT_TYPE_URL_ENCODED)
-            .formParam(GRANT_TYPE_FIELD, "client_credentials")
+            .contentType(URL_ENCODED_STRING)
+            .formParam(GRANT_TYPE_STRING, "client_credentials")
             .formParam("code", Config.getCode())
             .auth()
             .preemptive()
