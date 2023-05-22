@@ -42,7 +42,7 @@ public class ApiAdapter {
         }
     }
 
-    public static Boolean isPlaylistHealthy(Playlist playlist) {
+    private static Boolean isPlaylistHealthy(Playlist playlist) {
         var response = RestAssured.given()
             .baseUri(SpotifyEndpoints.PLAYLISTS.getValue())
             .header(AUTHORIZATION_STRING, BEARER_STRING)
