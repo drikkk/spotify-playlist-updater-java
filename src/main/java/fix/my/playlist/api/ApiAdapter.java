@@ -33,7 +33,7 @@ public class ApiAdapter {
     public static void updatePlaylists(List<Playlist> playlists) {
         for (var playlist : playlists) {
             if (isPlaylistHealthy(playlist)) {
-                log.info("{}: Nothing to update, playlist seems healthy!", playlist.getName());
+                log.info("{}: Playlist seems healthy... skipping update!", playlist.getName());
             } else {
                 if (playlist.getName() != null) updateName(playlist);
                 if (playlist.getImage() != null) updateImage(playlist);
@@ -44,7 +44,7 @@ public class ApiAdapter {
 
     private static Boolean isPlaylistHealthy(Playlist playlist) {
         var response = RestAssured.given()
-            .baseUri(SpotifyEndpoints.PLAYLISTS.getValue())
+            .baseUri(String.valueOf(SpotifyEndpoints.PLAYLISTS))
             .header(AUTHORIZATION_STRING, BEARER_STRING)
             .get(playlist.getSpotifyPlaylistId());
 
@@ -56,7 +56,7 @@ public class ApiAdapter {
         jsonObject.put("name", playlist.getName());
 
         Response response = RestAssured.given()
-            .baseUri(SpotifyEndpoints.PLAYLISTS.getValue())
+            .baseUri(String.valueOf(SpotifyEndpoints.PLAYLISTS))
             .header(AUTHORIZATION_STRING, BEARER_STRING)
             .contentType(JSON)
             .body(jsonObject)
@@ -76,7 +76,7 @@ public class ApiAdapter {
         jsonObject.put("description", playlist.getDescription());
 
         Response response = RestAssured.given()
-            .baseUri(SpotifyEndpoints.PLAYLISTS.getValue())
+            .baseUri(String.valueOf(SpotifyEndpoints.PLAYLISTS))
             .header(AUTHORIZATION_STRING, BEARER_STRING)
             .contentType(JSON)
             .body(jsonObject)
@@ -94,7 +94,7 @@ public class ApiAdapter {
     private static void updateImage(Playlist playlist) {
         Response response = RestAssured.given()
             .config(RestAssured.config().encoderConfig(encoderConfig().encodeContentTypeAs("image/jpeg", ContentType.TEXT)))
-            .baseUri(SpotifyEndpoints.PLAYLISTS.getValue())
+            .baseUri(String.valueOf(SpotifyEndpoints.PLAYLISTS))
             .header(AUTHORIZATION_STRING, BEARER_STRING)
             .contentType("image/jpeg")
             .body(Base64Converter.getBase64Image(playlist.getImage()))
@@ -111,7 +111,7 @@ public class ApiAdapter {
 
     private static String getRefreshedBearerToken() {
         Response response = RestAssured.given()
-            .baseUri(SpotifyEndpoints.TOKEN.getValue())
+            .baseUri(String.valueOf(SpotifyEndpoints.TOKEN))
             .contentType(URL_ENCODED_STRING)
             .formParam(GRANT_TYPE_STRING, REFRESH_TOKEN_STRING)
             .formParam(REFRESH_TOKEN_STRING, Config.getRefresherToken())
@@ -125,7 +125,7 @@ public class ApiAdapter {
 
     private static String getNewBearerToken() {
         Response response = RestAssured.given()
-            .baseUri(SpotifyEndpoints.TOKEN.getValue())
+            .baseUri(String.valueOf(SpotifyEndpoints.TOKEN))
             .contentType(URL_ENCODED_STRING)
             .formParam(GRANT_TYPE_STRING, "client_credentials")
             .formParam("code", Config.getCode())
