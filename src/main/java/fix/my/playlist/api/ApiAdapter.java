@@ -40,7 +40,7 @@ public class ApiAdapter {
 
     private static void updateName(Playlist playlist) {
         var jsonObject = new ObjectMapper().createObjectNode();
-        jsonObject.put("name", playlist.getDescription());
+        jsonObject.put("name", playlist.getName());
 
         Response response = RestAssured.given()
             .baseUri(SpotifyEndpoints.PLAYLISTS.getValue())
