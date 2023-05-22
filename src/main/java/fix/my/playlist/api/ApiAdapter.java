@@ -32,10 +32,23 @@ public class ApiAdapter {
 
     public static void updatePlaylists(List<Playlist> playlists) {
         for (var playlist : playlists) {
-            if (playlist.getName() != null) updateName(playlist);
-            if (playlist.getDescription() != null) updateDescription(playlist);
-            if (playlist.getImage() != null) updateImage(playlist);
+            if (isPlaylistHealthy(playlist)) {
+                if (playlist.getName() != null) updateName(playlist);
+                if (playlist.getImage() != null) updateImage(playlist);
+                if (playlist.getDescription() != null) updateDescription(playlist);
+            } else {
+                log.info("{}: Nothing to update, playlist seems healthy!", playlist.getName());
+            }
         }
+    }
+
+    public static Boolean isPlaylistHealthy(Playlist playlist) {
+        var response = RestAssured.given()
+            .baseUri(SpotifyEndpoints.PLAYLISTS.getValue())
+            .header(AUTHORIZATION_STRING, BEARER_STRING)
+            .get(playlist.getSpotifyPlaylistId());
+
+        return !response.jsonPath().getString("name").equals(playlist.getName());
     }
 
     private static void updateName(Playlist playlist) {
