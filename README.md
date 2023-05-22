@@ -15,12 +15,12 @@ With this program you can restore your playlists easily and stick it to the bots
 - Add your Spotify API credentials to config.properties
 - Define your playlists in MyPlaylists.class 
 - Execute main class through IDE or with Maven: 
-- ```mvn -f C:\path\to\project\root\pom.xml exec:java -Dexec.mainClass="fix.my.playlist.Main"```
+- ```mvn -f C:\path\to\project\root\pom.xml exec:java -Dexec.mainClass="fix.my.playlist.Main" --quiet```
 
 ## Running the script in the background on your Windows machine
 - Create a .bat file: 
 ```
-CALL mvn -f C:\path\to\project\root\pom.xml exec:java -Dexec.mainClass="fix.my.playlist.Main"
+CALL mvn -f C:\path\to\project\root\pom.xml exec:java -Dexec.mainClass="fix.my.playlist.Main" --quiet
 ```
 - Create a .svb file: 
 ```
