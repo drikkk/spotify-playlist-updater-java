@@ -14,7 +14,7 @@ With this program you can restore your playlists easily and stick it to the bots
 - Clone repository to "C:\\"
 - Rename config.properties.example to config.properties
 - Add your Spotify API credentials to config.properties
-- Define your playlists in MyPlaylists class
+- Define your playlists in src/main/resources/playlists.json (Empty strings will be ignored)
 
 ## Running the code in the background on your Windows machine
 Open Task Scheduler and create a new task to run a program with admin permissions, schedule it to 5 minutes interval after first run.
