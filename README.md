@@ -19,7 +19,7 @@ With this program you can restore your playlists easily and stick it to the bots
 ## Running the code in the background on your Windows machine
 Open Task Scheduler and create a new task to run a program with admin permissions, schedule it to 5 minutes interval after first run.
 ```
-Program to start: "C:\Windows\System32\wscript.exe"
-Argument: "C:\spotify-playlist-updater\runner.svb"
+Program to start: C:\Windows\System32\wscript.exe
+Argument: "C:\spotify-playlist-updater\runner.vbs"
 Start in: C:\spotify-playlist-updater
 ```
