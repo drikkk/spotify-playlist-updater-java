@@ -1,7 +1,5 @@
-# Mandatory
-refresher=a
-client=b
-secret=c
-
+refresher=
+client=
+secret=
 # Only necessary if you wish to retrieve a completely new token from BearerTokenRetriever
-code=d
+# code=
