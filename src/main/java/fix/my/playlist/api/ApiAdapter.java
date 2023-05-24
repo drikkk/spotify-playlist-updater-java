@@ -33,7 +33,7 @@ public class ApiAdapter {
     public static void updatePlaylists(List<Playlist> playlists) {
         for (var playlist : playlists) {
             if (isPlaylistHealthy(playlist)) {
-                log.info("{}: Playlist seems healthy... skipping update!", playlist.getName());
+                log.info("{}: Playlist name matches, skipping update!", playlist.getName());
             } else {
                 if (playlist.getName() != null) updateName(playlist);
                 if (playlist.getImage() != null) updateImage(playlist);
