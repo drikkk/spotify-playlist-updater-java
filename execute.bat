@@ -1,1 +1,1 @@
-mvn -f C:\spotify-playlist-updater\pom.xml exec:java --quiet >> updater.log
+mvn -f C:\spotify-playlist-updater\pom.xml clean package exec:java --quiet >> updater.log
