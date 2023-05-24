@@ -11,27 +11,15 @@ With this program you can restore your playlists easily and stick it to the bots
 - Spotify API Credentials (with ugc-image-upload & playlist-modify-*) permissions
 
 ## How to use
+- Clone repository to "C:\\"
 - Rename config.example.properties to config.properties
 - Add your Spotify API credentials to config.properties
-- Define your playlists in MyPlaylists.class 
-- Execute main class through IDE or with Maven: 
-- ```mvn -f C:\path\to\project\root\pom.xml exec:java -Dexec.mainClass="fix.my.playlist.Main" --quiet```
+- Define your playlists in MyPlaylists class
 
-## Running the script in the background on your Windows machine
-- Create a .bat file: 
+## Running the code in the background on your Windows machine
+Open Task Scheduler and create a new task to run a program with admin permissions, schedule it to 5 minutes interval after first run.
 ```
-CALL mvn -f C:\path\to\project\root\pom.xml exec:java -Dexec.mainClass="fix.my.playlist.Main" --quiet
+Program to start: "C:\Windows\System32\wscript.exe"
+Argument: "C:\spotify-playlist-updater\runner.svb"
+Start in: "C:\spotify-playlist-updater"
 ```
-- Create a .svb file: 
-```
-Dim WinScriptHost
-Set WinScriptHost = CreateObject("WScript.Shell")
-WinScriptHost.Run Chr(34) & "C:\path\to\your\bat\file.bat" & Chr(34), 0
-Set WinScriptHost = Nothing
-```
-- Open Windows Task Scheduler and create a task that executes (It might require Administrators group permission)
-```
-C:\Windows\System32\wscript.exe "C:\path\to\your\svb\file.svb"
-```
-
-Now your Spotify playlist is protected from spam bots and will be updated as per your scheduler configuration. Enjoy!
