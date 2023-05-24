@@ -1,5 +1,7 @@
-refresher=
+# Cannot be empty:
+refresher_token=
 client=
 secret=
-# Only necessary if you wish to retrieve a completely new token from BearerTokenRetriever
-# code=
+
+# Only necessary if you wish to call ApiAdapter.getNewBearerToken()
+code=
