@@ -21,5 +21,5 @@ Open Task Scheduler and create a new task to run a program with admin permission
 ```
 Program to start: "C:\Windows\System32\wscript.exe"
 Argument: "C:\spotify-playlist-updater\runner.svb"
-Start in: "C:\spotify-playlist-updater"
+Start in: C:\spotify-playlist-updater
 ```
