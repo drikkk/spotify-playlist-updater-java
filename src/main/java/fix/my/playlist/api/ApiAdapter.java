@@ -114,10 +114,10 @@ public class ApiAdapter {
             .baseUri(SpotifyEndpoints.TOKEN.toString())
             .contentType(URL_ENCODED_STRING)
             .formParam(GRANT_TYPE_STRING, REFRESH_TOKEN_STRING)
-            .formParam(REFRESH_TOKEN_STRING, Config.getRefresherToken())
+            .formParam(REFRESH_TOKEN_STRING, Config.refresherToken)
             .auth()
             .preemptive()
-            .basic(Config.getClient(), Config.getSecret())
+            .basic(Config.client, Config.secret)
             .post();
 
         return response.jsonPath().getString(ACCESS_TOKEN_STRING);
@@ -128,10 +128,10 @@ public class ApiAdapter {
             .baseUri(SpotifyEndpoints.TOKEN.toString())
             .contentType(URL_ENCODED_STRING)
             .formParam(GRANT_TYPE_STRING, "client_credentials")
-            .formParam("code", Config.getCode())
+            .formParam("code", Config.code)
             .auth()
             .preemptive()
-            .basic(Config.getClient(), Config.getSecret())
+            .basic(Config.client, Config.secret)
             .post();
 
         return response.jsonPath().getString(ACCESS_TOKEN_STRING);
