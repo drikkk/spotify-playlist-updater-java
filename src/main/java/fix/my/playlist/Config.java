@@ -1,35 +1,55 @@
 package fix.my.playlist;
 
-import java.io.IOException;
+import fix.my.playlist.api.ApiAdapter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.List;
 import java.util.Properties;
 
 public class Config {
 
     private static final Properties properties;
+    public static String refresherToken;
+    public static String client;
+    public static String secret;
+    public static String code;
+    private static final Logger log = LogManager.getLogger(ApiAdapter.class);
 
     static {
         properties = new Properties();
 
         try {
             properties.load(Config.class.getClassLoader().getResourceAsStream("config.properties"));
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (Exception ex) {
+            log.fatal("Could not find config file!");
+            throw new RuntimeException();
+        }
+
+        refresherToken = getRefresherTokenValueFromPropertiesFile();
+        client = getClientValueFromPropertiesFile();
+        secret = getSecretValueFromPropertiesFile();
+        code = getCodeValueFromPropertiesFile();
+
+        if (List.of(refresherToken, client, secret).contains("")) {
+            log.fatal("Check config file values!");
+            throw new RuntimeException();
         }
     }
 
-    public static String getRefresherToken() {
-        return properties.getProperty("refresher");
+    private static String getRefresherTokenValueFromPropertiesFile() {
+        return properties.getProperty("refresher_token");
     }
 
-    public static String getClient() {
+    private static String getClientValueFromPropertiesFile() {
         return properties.getProperty("client");
     }
 
-    public static String getSecret() {
+    private static String getSecretValueFromPropertiesFile() {
         return properties.getProperty("secret");
     }
 
-    public static String getCode() {
+    private static String getCodeValueFromPropertiesFile() {
         return properties.getProperty("code");
     }
 }
