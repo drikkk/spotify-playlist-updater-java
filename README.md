@@ -12,7 +12,7 @@ With this program you can restore your playlists easily and stick it to the bots
 
 ## How to use
 - Clone repository to "C:\\"
-- Rename config.example.properties to config.properties
+- Rename config.properties.example to config.properties
 - Add your Spotify API credentials to config.properties
 - Define your playlists in MyPlaylists class
 
