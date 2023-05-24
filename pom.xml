@@ -39,7 +39,20 @@
             <artifactId>log4j-core</artifactId>
             <version>2.20.0</version>
         </dependency>
-
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <mainClass>fix.my.playlist.Main</mainClass>
+                </configuration>
+            </plugin>
+            <!-- Other plugins -->
+        </plugins>
+    </build>
 
 </project>
