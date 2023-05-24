@@ -1,19 +1,15 @@
 package fix.my.playlist.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.io.File;
-
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Playlist {
-
-    @Getter
-    private final String name;
-    @Getter
-    private final String description;
-    @Getter
-    private final File image;
-    @Getter
-    private final String spotifyPlaylistId;
+    private String name;
+    private String description;
+    private String image;
+    private String spotifyPlaylistId;
 }
