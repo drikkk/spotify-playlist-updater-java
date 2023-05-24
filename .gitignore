@@ -23,10 +23,8 @@
 hs_err_pid*
 replay_pid*
 
-# User-specific stuff:
 .idea/workspace.xmls
 .idea/tasks.xml
 target
-
-# Config
+updater.log
 config.properties
