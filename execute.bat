@@ -1,0 +1,1 @@
+mvn -f C:\spotify-playlist-updater\pom.xml exec:java --quiet >> updater.log
