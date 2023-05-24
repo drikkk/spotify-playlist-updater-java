@@ -32,12 +32,24 @@ public class ApiAdapter {
 
     public static void updatePlaylists(List<Playlist> playlists) {
         for (var playlist : playlists) {
+            var playlistName = playlist.getName();
+
+            if (playlistName.isEmpty()) {
+                log.fatal("Playlist Name cannot be empty!");
+                throw new RuntimeException();
+            }
+
+            if (playlist.getSpotifyPlaylistId().isEmpty()) {
+                log.fatal("{}: Playlist Spotify ID cannot be empty!", playlistName);
+                throw new RuntimeException();
+            }
+
             if (isPlaylistHealthy(playlist)) {
-                log.info("{}: Playlist name matches, skipping update!", playlist.getName());
+                log.info("{}: Playlist Name matches, skipping update!", playlistName);
             } else {
-                if (playlist.getName() != null) updateName(playlist);
-                if (playlist.getImage() != null) updateImage(playlist);
-                if (playlist.getDescription() != null) updateDescription(playlist);
+                updateName(playlist);
+                if (!playlist.getImage().equals("")) updateImage(playlist);
+                if (!playlist.getDescription().equals("")) updateDescription(playlist);
             }
         }
     }
@@ -135,5 +147,14 @@ public class ApiAdapter {
             .post();
 
         return response.jsonPath().getString(ACCESS_TOKEN_STRING);
+    }
+
+    public static String getImageUrl(Playlist playlist) {
+        return RestAssured.given()
+            .baseUri("https://api.spotify.com/v1/playlists/" + playlist.getSpotifyPlaylistId())
+            .header(AUTHORIZATION_STRING, BEARER_STRING)
+            .contentType(JSON)
+            .get()
+            .jsonPath().get("images");
     }
 }

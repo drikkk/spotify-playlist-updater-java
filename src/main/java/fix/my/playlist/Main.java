@@ -1,35 +1,32 @@
 package fix.my.playlist;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import fix.my.playlist.api.ApiAdapter;
-import fix.my.playlist.data.MyPlaylists;
 import fix.my.playlist.model.Playlist;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 public class Main {
 
+    private static final Logger log = LogManager.getLogger(Main.class);
+
     public static void main(String[] args) {
-        ApiAdapter.updatePlaylists(getPlaylists());
-    }
+        var objectMapper = new ObjectMapper();
+        var inputStream = Main.class.getClassLoader().getResourceAsStream("playlists.json");
 
-    private static List<Playlist> getPlaylists() {
-        List<Playlist> playlistList = new ArrayList<>();
-        Class<?> containingClass = MyPlaylists.class;
-
-        Field[] fields = containingClass.getDeclaredFields();
-        for (Field field : fields) {
-            if (field.getType() == Playlist.class) {
-                try {
-                    field.setAccessible(true);
-                    Playlist playlist = (Playlist) field.get(null);
-                    playlistList.add(playlist);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
+        TypeReference<List<Playlist>> typeReference = new TypeReference<>() {};
+        List<Playlist> playlists;
+        try {
+            playlists = objectMapper.readValue(inputStream, typeReference);
+        } catch (IOException e) {
+            log.fatal("Error loading playlists.json");
+            throw new RuntimeException(e);
         }
-        return playlistList;
+
+        ApiAdapter.updatePlaylists(playlists);
     }
 }
