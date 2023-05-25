@@ -1,6 +1,5 @@
 package fix.my.playlist;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fix.my.playlist.api.ApiAdapter;
 import fix.my.playlist.model.Playlist;
@@ -17,18 +16,21 @@ public class Main {
     private static final Logger log = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
-        var playlistJsonPathString = Paths.get(System.getProperty("user.dir"), "playlists", "playlists.json").toAbsolutePath().toString();
-        var objectMapper = new ObjectMapper();
+        var playlistsFromJson = getPlaylists();
+        ApiAdapter.updatePlaylists(playlistsFromJson);
+    }
 
-        TypeReference<List<Playlist>> typeReference = new TypeReference<>() {};
-        List<Playlist> playlists;
+    private static List<Playlist> getPlaylists() {
+        var objectMapper = new ObjectMapper();
+        var collectionType = objectMapper.getTypeFactory().constructCollectionType(List.class, Playlist.class);
+        var playlistJsonPathString = Paths.get(System.getProperty("user.dir"), "playlists", "playlists.json").toAbsolutePath().toString();
+        var jsonFile = new File(playlistJsonPathString);
+
         try {
-            playlists = objectMapper.readValue(new File(playlistJsonPathString), typeReference);
+            return objectMapper.readValue(jsonFile, collectionType);
         } catch (IOException e) {
             log.fatal("Error loading playlists.json");
             throw new RuntimeException(e);
         }
-
-        ApiAdapter.updatePlaylists(playlists);
     }
 }
