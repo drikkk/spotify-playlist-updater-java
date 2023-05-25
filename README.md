@@ -10,12 +10,12 @@ I have the runner set up on my Windows 11 machine like so:
 - [Maven 3](https://maven.apache.org/download.cgi)
 - [Spotify API Credentials](https://developer.spotify.com/documentation/web-api/tutorials/client-credentials-flow)
 
-## How to use
+## Set up Java project
 - Clone repository to "C:\\"
 - Rename config.properties.example to config.properties
 - Add your Spotify API credentials to config.properties
 
-## Define your playlists to update
+## Define your playlists
 - Get your playlist ID: ```https://open.spotify.com/playlist/YOUR_PLAYLIST_ID?si=83ebb0218ab843cd```
 - Move all your playlist images to: ```C:\spotify-playlist-updater\playlists```
 - Edit ```C:\spotify-playlist-updater\playlists\playlists.json```
@@ -35,7 +35,7 @@ I have the runner set up on my Windows 11 machine like so:
 }
 ```
 
-## Running in intervals on your Windows machine
+## Running every 5 minutes in the background on your Windows machine
 Open Task Scheduler and create a new task to run a program with admin permissions, schedule it to 5 minutes interval after first run.
 ```
 Program to start: C:\Windows\System32\wscript.exe
