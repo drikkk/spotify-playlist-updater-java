@@ -38,6 +38,6 @@ Note: For "Cool playlist" the image will not be updated since we leave it at emp
 Open Task Scheduler and create a new task to run a program with admin permissions, schedule it to 5 minutes interval after first run.
 ```
 Program to start: C:\Windows\System32\wscript.exe
-Argument: "C:\spotify-playlist-updater\src\main\resources\runner.vbs"
-Start in: C:\spotify-playlist-updater\src\main\resources
+Argument: "C:\spotify-playlist-updater\runner.vbs"
+Start in: C:\spotify-playlist-updater
 ```
