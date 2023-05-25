@@ -17,14 +17,13 @@ public class Main {
     private static final Logger log = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
-        var filePath = Paths.get(System.getProperty("user.dir"), "playlists", "playlists.json");
-        var playlistJsonPath = filePath.toAbsolutePath().toString();
+        var playlistJsonPathString = Paths.get(System.getProperty("user.dir"), "playlists", "playlists.json").toAbsolutePath().toString();
         var objectMapper = new ObjectMapper();
 
         TypeReference<List<Playlist>> typeReference = new TypeReference<>() {};
         List<Playlist> playlists;
         try {
-            playlists = objectMapper.readValue(new File(playlistJsonPath), typeReference);
+            playlists = objectMapper.readValue(new File(playlistJsonPathString), typeReference);
         } catch (IOException e) {
             log.fatal("Error loading playlists.json");
             throw new RuntimeException(e);

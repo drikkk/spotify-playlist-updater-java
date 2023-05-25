@@ -8,11 +8,10 @@ import java.util.Base64;
 public class ImageHelper {
 
     public static String getBase64Image(String imageName) {
-        var filePath = Paths.get(System.getProperty("user.dir"), "playlists", imageName);
-        var imagePath = filePath.toAbsolutePath().toString();
+        var imageAbsolutePath = Paths.get(System.getProperty("user.dir"), "playlists", imageName).toAbsolutePath();
 
         try {
-            var imageByteArray = Files.readAllBytes(new File(imagePath).toPath());
+            var imageByteArray = Files.readAllBytes(imageAbsolutePath);
             return Base64.getEncoder().encodeToString(imageByteArray);
         } catch (Exception e) {
             e.printStackTrace();
