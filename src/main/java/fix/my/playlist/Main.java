@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class Main {
@@ -16,7 +17,8 @@ public class Main {
     private static final Logger log = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
-        var playlistJsonPath = System.getProperty("user.dir").concat("/playlists/playlists.json");
+        var filePath = Paths.get(System.getProperty("user.dir"), "playlists", "playlists.json");
+        var playlistJsonPath = filePath.toAbsolutePath().toString();
         var objectMapper = new ObjectMapper();
 
         TypeReference<List<Playlist>> typeReference = new TypeReference<>() {};
