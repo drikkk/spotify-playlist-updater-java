@@ -7,6 +7,7 @@ import fix.my.playlist.model.Playlist;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -15,13 +16,13 @@ public class Main {
     private static final Logger log = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
+        var playlistJsonPath = System.getProperty("user.dir").concat("/playlists/playlists.json");
         var objectMapper = new ObjectMapper();
-        var inputStream = Main.class.getClassLoader().getResourceAsStream("playlists.json");
 
         TypeReference<List<Playlist>> typeReference = new TypeReference<>() {};
         List<Playlist> playlists;
         try {
-            playlists = objectMapper.readValue(inputStream, typeReference);
+            playlists = objectMapper.readValue(new File(playlistJsonPath), typeReference);
         } catch (IOException e) {
             log.fatal("Error loading playlists.json");
             throw new RuntimeException(e);
