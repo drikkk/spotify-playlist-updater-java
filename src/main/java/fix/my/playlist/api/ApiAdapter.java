@@ -30,23 +30,21 @@ public class ApiAdapter {
         BEARER_STRING = "Bearer " + getRefreshedBearerToken();
     }
 
-    public static void updatePlaylists(List<Playlist> playlists) {
+    public static void checkPlaylists(List<Playlist> playlists) {
         for (var playlist : playlists) {
-            var playlistName = playlist.getName();
+            var myPlaylistName = playlist.getName();
 
-            if (playlistName.isEmpty()) {
+            if (myPlaylistName.isEmpty()) {
                 log.fatal("Playlist Name cannot be empty!");
                 throw new RuntimeException();
             }
 
             if (playlist.getSpotifyPlaylistId().isEmpty()) {
-                log.fatal("{}: Playlist Spotify ID cannot be empty!", playlistName);
+                log.fatal("{}: Playlist Spotify ID cannot be empty!", myPlaylistName);
                 throw new RuntimeException();
             }
 
-            if (isPlaylistHealthy(playlist)) {
-                log.info("{}: Playlist Name matches, skipping update!", playlistName);
-            } else {
+            if (!getActualPlaylistName(playlist).equals(myPlaylistName)) {
                 updateName(playlist);
                 if (!playlist.getImage().equals("")) updateImage(playlist);
                 if (!playlist.getDescription().equals("")) updateDescription(playlist);
@@ -54,13 +52,13 @@ public class ApiAdapter {
         }
     }
 
-    private static Boolean isPlaylistHealthy(Playlist playlist) {
+    private static String getActualPlaylistName(Playlist playlist) {
         var response = RestAssured.given()
             .baseUri(SpotifyEndpoints.PLAYLISTS.toString())
             .header(AUTHORIZATION_STRING, BEARER_STRING)
             .get(playlist.getSpotifyPlaylistId());
 
-        return response.jsonPath().getString("name").equals(playlist.getName());
+        return response.jsonPath().getString("name");
     }
 
     private static void updateName(Playlist playlist) {
