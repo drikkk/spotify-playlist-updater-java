@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fix.my.playlist.Config;
 import fix.my.playlist.data.SpotifyEndpoints;
 import fix.my.playlist.model.Playlist;
-import fix.my.playlist.util.Base64Converter;
+import fix.my.playlist.util.ImageHelper;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -109,7 +109,7 @@ public class ApiAdapter {
             .baseUri(SpotifyEndpoints.PLAYLISTS.toString())
             .header(AUTHORIZATION_STRING, BEARER_STRING)
             .contentType("image/jpeg")
-            .body(Base64Converter.getBase64Image(playlist.getImage()))
+            .body(ImageHelper.getBase64Image(playlist.getImage()))
             .put(playlist.getSpotifyPlaylistId() + "/images");
 
         int statusCode = response.getStatusCode();
