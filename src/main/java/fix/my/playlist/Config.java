@@ -10,11 +10,11 @@ import java.util.Properties;
 public class Config {
 
     private static final Properties properties;
+    private static final Logger log = LogManager.getLogger(ApiAdapter.class);
     public static String refresherToken;
     public static String client;
     public static String secret;
     public static String code;
-    private static final Logger log = LogManager.getLogger(ApiAdapter.class);
 
     static {
         properties = new Properties();
