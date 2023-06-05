@@ -1,4 +1,8 @@
-# Spotify Playlist Updater
+# Deprecated & ported to Python: [Spotify Playlist Doctor](https://github.com/drikkk/Spotify-Playlist-Doctor)
+
+
+
+## Spotify Playlist Updater
 
 I created this project to fight the Spotify playlist reporting bots.
 Salty creators use bots to spam reports on growing playlists which triggers the Spotify Takedown Notification and your
